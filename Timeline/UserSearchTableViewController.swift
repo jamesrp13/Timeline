@@ -10,42 +10,70 @@ import UIKit
 
 class UserSearchTableViewController: UITableViewController {
 
+    enum ViewMode: Int {
+        case Friends
+        case All
+        
+        func users(completion: (users: [User]?)->Void) {
+            switch self {
+            case Friends:
+                UserController.followedByUser(UserController.sharedController.currentUser, completion: { (followed) -> Void in
+                    completion(users: followed)
+                })
+            case All:
+                UserController.fetchAllUsers({ (users) -> Void in
+                completion(users: users)
+                })
+            }
+        }
+    }
+    
+    @IBOutlet weak var modeSegmentedControl: UISegmentedControl!
+    
+    var usersDataSource = [User]()
+    
+    var mode: ViewMode {
+        return ViewMode(rawValue: modeSegmentedControl.selectedSegmentIndex)!
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        updateViewBasedOnMode()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func selectedIndexChanged(sender: AnyObject) {
+        updateViewBasedOnMode()
     }
 
+    func updateViewBasedOnMode() {
+        self.mode.users { (users) -> Void in
+            if let users = users {
+                self.usersDataSource = users
+            } else {
+                self.usersDataSource = []
+            }
+            self.tableView.reloadData()
+        }
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return usersDataSource.count
     }
 
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("userCell", forIndexPath: indexPath)
 
-        // Configure the cell...
+        cell.textLabel?.text = usersDataSource[indexPath.row].username
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.

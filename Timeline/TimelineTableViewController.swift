@@ -10,19 +10,26 @@ import UIKit
 
 class TimelineTableViewController: UITableViewController {
 
+    var posts: [Post] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        if let currentUser = UserController.sharedController.currentUser {
+            if posts.count == 0 {
+                loadTimeLineForUser(currentUser)
+            }
+        } else {
+            performSegueWithIdentifier("toLoginSignup", sender: nil)
+        }
+    }
+    
+    func loadTimeLineForUser(user: User) {
+        
     }
 
     // MARK: - Table view data source

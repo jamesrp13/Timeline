@@ -17,7 +17,7 @@ struct Post: Equatable {
     let likes: [Like]
     var identifier: String?
     
-    init(imageEndPoint: String, caption: String? = nil, username: String, comments: [Comment] = [], likes: [Like] = [], identifier: String? = nil) {
+    init(imageEndPoint: String, caption: String? = nil, username: String = UserController.sharedController.currentUser.username, comments: [Comment] = [], likes: [Like] = [], identifier: String? = nil) {
         self.imageEndPoint = imageEndPoint
         self.caption = caption
         self.username = username
