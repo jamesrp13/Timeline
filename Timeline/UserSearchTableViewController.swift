@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserSearchTableViewController: UITableViewController {
+class UserSearchTableViewController: UITableViewController, UISearchResultsUpdating {
 
     enum ViewMode: Int {
         case Friends
@@ -16,11 +16,11 @@ class UserSearchTableViewController: UITableViewController {
         
         func users(completion: (users: [User]?)->Void) {
             switch self {
-            case Friends:
+            case .Friends:
                 UserController.followedByUser(UserController.sharedController.currentUser, completion: { (followed) -> Void in
                     completion(users: followed)
                 })
-            case All:
+            case .All:
                 UserController.fetchAllUsers({ (users) -> Void in
                 completion(users: users)
                 })
@@ -32,6 +32,8 @@ class UserSearchTableViewController: UITableViewController {
     
     var usersDataSource = [User]()
     
+    var searchController: UISearchController!
+    
     var mode: ViewMode {
         return ViewMode(rawValue: modeSegmentedControl.selectedSegmentIndex)!
     }
@@ -40,6 +42,7 @@ class UserSearchTableViewController: UITableViewController {
         super.viewDidLoad()
 
         updateViewBasedOnMode()
+        setupSearchController()
     }
 
     @IBAction func selectedIndexChanged(sender: AnyObject) {
@@ -73,6 +76,27 @@ class UserSearchTableViewController: UITableViewController {
         cell.textLabel?.text = usersDataSource[indexPath.row].username
 
         return cell
+    }
+    
+    // Mark: Search Controller
+    
+    func setupSearchController() {
+        let resultsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("userSearchResults")
+        searchController = UISearchController(searchResultsController: resultsController)
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.sizeToFit()
+        searchController.hidesNavigationBarDuringPresentation = false
+        
+        tableView.tableHeaderView = searchController.searchBar
+        definesPresentationContext = true
+    }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        let searchTerm = searchController.searchBar.text!.lowercaseString
+        let resultsViewController = searchController.searchResultsController as! UserSearchResultsTableViewController
+        
+        resultsViewController.userSearchResultsDataSource = self.usersDataSource.filter({$0.username.lowercaseString.containsString(searchTerm)})
+        resultsViewController.tableView.reloadData()
     }
 
     /*

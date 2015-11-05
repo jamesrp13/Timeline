@@ -25,6 +25,7 @@
 		1ABD27041BE96FAA00E770A3 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABD27031BE96FAA00E770A3 /* UserController.swift */; };
 		1ABD27061BE9775200E770A3 /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABD27051BE9775200E770A3 /* PostController.swift */; };
 		1ABD27081BE97C6700E770A3 /* ImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABD27071BE97C6700E770A3 /* ImageController.swift */; };
+		1ABD27321BEBAFA900E770A3 /* UserSearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABD27311BEBAFA900E770A3 /* UserSearchResultsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		1ABD27031BE96FAA00E770A3 /* UserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserController.swift; path = ../UserController.swift; sourceTree = "<group>"; };
 		1ABD27051BE9775200E770A3 /* PostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostController.swift; sourceTree = "<group>"; };
 		1ABD27071BE97C6700E770A3 /* ImageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageController.swift; sourceTree = "<group>"; };
+		1ABD27311BEBAFA900E770A3 /* UserSearchResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSearchResultsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 				1ABD26EC1BE9647B00E770A3 /* PostDetailTableViewController.swift */,
 				1ABD26F21BE9668E00E770A3 /* ProfileViewController.swift */,
 				1ABD26E91BE95CF600E770A3 /* TimelineTableViewController.swift */,
+				1ABD27311BEBAFA900E770A3 /* UserSearchResultsTableViewController.swift */,
 				1ABD26EE1BE965BA00E770A3 /* UserSearchTableViewController.swift */,
 			);
 			name = ViewControllers;
@@ -193,6 +196,7 @@
 				1ABD26F31BE9668E00E770A3 /* ProfileViewController.swift in Sources */,
 				1ABD26FD1BE96B7300E770A3 /* Post.swift in Sources */,
 				1ABD26EF1BE965BA00E770A3 /* UserSearchTableViewController.swift in Sources */,
+				1ABD27321BEBAFA900E770A3 /* UserSearchResultsTableViewController.swift in Sources */,
 				1ABD27011BE96B9300E770A3 /* Like.swift in Sources */,
 				1ABD26EA1BE95CF600E770A3 /* TimelineTableViewController.swift in Sources */,
 				1ABD27081BE97C6700E770A3 /* ImageController.swift in Sources */,

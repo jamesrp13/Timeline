@@ -178,7 +178,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="UAC-VX-uI1">
                                         <rect key="frame" x="0.0" y="89" width="288" height="59"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TQV-02-PCh">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TQV-02-PCh">
                                                 <rect key="frame" x="0.0" y="0.0" width="144" height="59"/>
                                                 <animations/>
                                                 <state key="normal" title="Login"/>
@@ -186,7 +186,7 @@
                                                     <segue destination="qol-bi-nuO" kind="show" identifier="loginSegue" id="nfn-In-IOY"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sfd-pm-egG">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sfd-pm-egG">
                                                 <rect key="frame" x="144" y="0.0" width="144" height="59"/>
                                                 <animations/>
                                                 <state key="normal" title="Signup"/>
@@ -278,9 +278,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="bf2-3r-aqd">
+                            <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="WnT-wD-8uw" id="u25-ba-ZNe"/>
+                            </connections>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="userCell" id="9xA-7j-ndb">
-                                <rect key="frame" x="0.0" y="92" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="136" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9xA-7j-ndb" id="Yrh-fu-1rG">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -312,11 +321,53 @@
                     </navigationItem>
                     <connections>
                         <outlet property="modeSegmentedControl" destination="E0c-j9-hWT" id="pp3-8r-dfM"/>
+                        <outlet property="searchDisplayController" destination="9Uk-rX-S7q" id="fxj-Ag-OQV"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tjj-JC-Qsb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="9Uk-rX-S7q">
+                    <connections>
+                        <outlet property="delegate" destination="WnT-wD-8uw" id="YPG-zG-aHV"/>
+                        <outlet property="searchBar" destination="bf2-3r-aqd" id="c4f-Hk-rRG"/>
+                        <outlet property="searchContentsController" destination="WnT-wD-8uw" id="iTd-tT-X5h"/>
+                        <outlet property="searchResultsDataSource" destination="WnT-wD-8uw" id="Mso-QL-wIo"/>
+                        <outlet property="searchResultsDelegate" destination="WnT-wD-8uw" id="jMa-ZP-VHs"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="-386" y="-201"/>
+        </scene>
+        <!--User Search Results Table View Controller-->
+        <scene sceneID="9Pk-WY-5KG">
+            <objects>
+                <tableViewController storyboardIdentifier="userSearchResults" id="qse-se-epN" customClass="UserSearchResultsTableViewController" customModule="Timeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="oWZ-H7-DyQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="resultsCell" id="md5-Pk-WED">
+                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="md5-Pk-WED" id="t08-aL-pff">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="qse-se-epN" id="MBc-F2-GbO"/>
+                            <outlet property="delegate" destination="qse-se-epN" id="fVO-X5-EN4"/>
+                        </connections>
+                    </tableView>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fpo-gD-3DV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-21" y="-201"/>
         </scene>
         <!--Profile-->
         <scene sceneID="Myx-12-3tI">
