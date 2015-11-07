@@ -14,11 +14,6 @@ class TimelineTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(true)
         if let currentUser = UserController.sharedController.currentUser {
             if posts.count == 0 {
                 loadTimeLineForUser(currentUser)
@@ -28,31 +23,45 @@ class TimelineTableViewController: UITableViewController {
         }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+
+    }
+    
     func loadTimeLineForUser(user: User) {
-        
+        PostController.fetchTimelineForUser(user) { (posts) -> Void in
+            self.posts = posts
+            self.tableView.reloadData()
+        }
     }
 
+    @IBAction func userRefreshedTable(sender: AnyObject) {
+        PostController.fetchTimelineForUser(UserController.sharedController.currentUser) { (posts) -> Void in
+            self.posts = posts
+            self.tableView.reloadData()
+            self.refreshControl?.endRefreshing()
+        }
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return posts.count
     }
 
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
 
-        // Configure the cell...
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("timelineImageCell", forIndexPath: indexPath) as! PostTableViewCell
+
+        cell.updateWithPost(posts[indexPath.row])
 
         return cell
     }
-    */
+
 
     /*
     // Override to support conditional editing of the table view.

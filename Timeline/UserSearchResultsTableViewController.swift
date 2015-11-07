@@ -75,14 +75,13 @@ class UserSearchResultsTableViewController: UITableViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let destinationViewController = segue.destinationViewController as? ProfileViewController {
-            if let indexRow = tableView.indexPathForSelectedRow?.row {
-                let user = self.userSearchResultsDataSource[indexRow]
-                destinationViewController.user = user
-            }
-        }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let sender = tableView.cellForRowAtIndexPath(indexPath)
+        self.presentingViewController?.performSegueWithIdentifier("toProfileView", sender: sender)
     }
+    
+
 
 
 }

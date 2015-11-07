@@ -25,9 +25,12 @@ class LoginSignupViewController: UIViewController {
     enum ViewMode {
         case Login
         case Signup
+        case Edit
     }
     
     var mode = ViewMode.Signup
+    
+    var user: User?
     
     var fieldsAreValid: Bool {
         switch mode {
@@ -36,6 +39,9 @@ class LoginSignupViewController: UIViewController {
             return true
         case .Login:
             guard let email = emailField.text where email.characters.count>0, let password = passwordField.text where password.characters.count>4 else {return false}
+            return true
+        case .Edit:
+            guard let username = usernameField.text where username.characters.count>4 else {return false}
             return true
         }
     }
@@ -55,6 +61,10 @@ class LoginSignupViewController: UIViewController {
             usernameField.hidden = true
             bioField.hidden = true
             urlField.hidden = true
+        case .Edit:
+            actionButton.setTitle("Save Changes", forState: .Normal)
+            emailField.hidden = true
+            passwordField.hidden = true
         }
     }
 
@@ -80,6 +90,15 @@ class LoginSignupViewController: UIViewController {
                         self.presentValidationAlertWithTitle("Invalid credentials", text: "We don't recognize the email and password combination that you gave us.")
                     }
                 })
+            case .Edit:
+                guard let username = usernameField.text else {break}
+                UserController.updateUser(UserController.sharedController.currentUser, username: username, bio: bioField.text, url: urlField.text, completion: { (success, user) -> Void in
+                    if success {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    } else {
+                        self.presentValidationAlertWithTitle("Unable to update information", text: "Please input a valid username")
+                    }
+                })
             }
         } else {
             self.presentValidationAlertWithTitle("Missing Information", text: "Please check that you have valid entries in all required fields and try again")
@@ -90,6 +109,11 @@ class LoginSignupViewController: UIViewController {
         let alert = UIAlertController(title: title, message: text, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
         presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func updateWithUser() {
+        self.user = UserController.sharedController.currentUser
+        mode = .Edit
     }
 }
 
