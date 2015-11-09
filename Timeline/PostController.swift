@@ -34,9 +34,11 @@ class PostController {
         
     }
     
-    static func addCommentWithTextToPost(text: String, post: Post, completion: (success: Bool, post: Post?) -> Void) {
+    static func addCommentWithTextToPost(text: String, var post: Post, completion: (success: Bool, post: Post?) -> Void) {
+        let comment = Comment(username: UserController.sharedController.currentUser.username, text: text, postIdentifier: post.identifier!)
         
-        completion(success: true, post: mockPosts().first)
+        post.comments.append(comment)
+        completion(success: true, post: post)
     }
  
     static func deleteComment(comment: Comment, completion: (success: Bool, post: Post?) -> Void) {

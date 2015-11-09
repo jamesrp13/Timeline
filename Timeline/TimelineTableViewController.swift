@@ -98,14 +98,17 @@ class TimelineTableViewController: UITableViewController {
     }
     */
 
-    /*
+
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "toPostDetailView" {
+            let cell = sender as! UITableViewCell
+            let index = tableView.indexPathForCell(cell)
+            if let destinationViewController = segue.destinationViewController as? PostDetailTableViewController {
+                destinationViewController.post = posts[(index?.row)!]
+            }
+        }
     }
-    */
 
 }

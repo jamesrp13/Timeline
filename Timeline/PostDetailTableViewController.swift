@@ -10,42 +10,75 @@ import UIKit
 
 class PostDetailTableViewController: UITableViewController {
 
+    @IBOutlet weak var commentsLabel: UILabel!
+    @IBOutlet weak var likesLabel: UILabel!
+    @IBOutlet weak var headerImageView: UIImageView!
+    var post: Post!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        if let post = post {
+            updateBasedOnPost(post)
+        } else {
+            dismissViewControllerAnimated(true, completion: nil)
+        }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func updateBasedOnPost(post: Post) {
+        self.post = post
+            ImageController.imageForIdentifier(post.imageEndPoint, completion: { (image) -> Void in
+                self.headerImageView.image = image
+            })
+            likesLabel.text = "\(post.likes.count) likes"
+            commentsLabel.text = "\(post.comments.count) comments"
     }
 
+    @IBAction func likeTapped(sender: AnyObject) {
+        if let post = post {
+            PostController.addLikeToPost(post, completion: { (success, post) -> Void in
+                self.tableView.reloadData()
+            })
+        }
+    }
+    
+    @IBAction func addCommentTapped(sender: AnyObject) {
+        let commentAlert = UIAlertController(title: "Write your comment below", message: "", preferredStyle: .Alert)
+        
+        commentAlert.addTextFieldWithConfigurationHandler { (textField) -> Void in
+            textField.placeholder = "Comment"
+        }
+        
+        commentAlert.addAction(UIAlertAction(title: "Add Comment", style: .Default, handler: { (_) -> Void in
+            if let text = commentAlert.textFields?.first?.text {
+                PostController.addCommentWithTextToPost(text, post: self.post, completion: { (success, post) -> Void in
+                    if let post = post {
+                        self.updateBasedOnPost(post)
+                    }
+                })
+            }
+        }))
+        commentAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        presentViewController(commentAlert, animated: true, completion: nil)
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return self.post.comments.count
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("commentCell", forIndexPath: indexPath) as! PostCommentTableViewCell
+        cell.updateWithComment(self.post.comments[indexPath.row])
+        
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.

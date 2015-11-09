@@ -13,7 +13,7 @@ struct Post: Equatable {
     let imageEndPoint: String
     var caption: String?
     let username: String
-    let comments: [Comment]
+    var comments: [Comment]
     let likes: [Like]
     var identifier: String?
     

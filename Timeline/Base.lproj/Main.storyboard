@@ -63,7 +63,7 @@
                                     <outlet property="commentsLabel" destination="IQI-En-MNs" id="W9g-gU-9iQ"/>
                                     <outlet property="likesLabel" destination="qb5-uW-WtV" id="V1t-K9-dN0"/>
                                     <outlet property="postImageView" destination="cp0-wb-bg0" id="TWQ-Ti-J2i"/>
-                                    <segue destination="Pts-g2-YMc" kind="show" id="2ci-tB-kVL"/>
+                                    <segue destination="Pts-g2-YMc" kind="show" identifier="toPostDetailView" id="2ci-tB-kVL"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -180,7 +180,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BMJ-Us-aKV">
-                                                    <rect key="frame" x="0.0" y="21" width="320" height="32"/>
+                                                    <rect key="frame" x="0.0" y="21" width="320" height="30"/>
                                                     <animations/>
                                                     <state key="normal" title="Homepage"/>
                                                     <connections>
@@ -188,7 +188,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UxD-QQ-ssW">
-                                                    <rect key="frame" x="0.0" y="52" width="320" height="30"/>
+                                                    <rect key="frame" x="0.0" y="51" width="320" height="32"/>
                                                     <animations/>
                                                     <state key="normal" title="Follow"/>
                                                     <connections>
@@ -268,7 +268,7 @@
         <scene sceneID="jms-Kc-b0w">
             <objects>
                 <tableViewController id="Pts-g2-YMc" customClass="PostDetailTableViewController" customModule="Timeline" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="aT9-8B-Rm8">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="57" sectionHeaderHeight="28" sectionFooterHeight="28" id="aT9-8B-Rm8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
@@ -313,16 +313,51 @@
                                 <constraint firstAttribute="bottom" secondItem="0JB-99-Khu" secondAttribute="bottom" constant="8" id="w5x-rx-0ya"/>
                             </constraints>
                         </view>
+                        <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="LFW-DL-Isg">
+                            <rect key="frame" x="0.0" y="366" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <state key="normal" title="Add Comment"/>
+                            <connections>
+                                <action selector="addCommentTapped:" destination="Pts-g2-YMc" eventType="touchUpInside" id="Zt5-fV-RfL"/>
+                            </connections>
+                        </button>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="commentCell" id="Lkn-T5-koC">
-                                <rect key="frame" x="0.0" y="309" width="320" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="commentCell" rowHeight="57" id="Lkn-T5-koC" customClass="PostCommentTableViewCell" customModule="Timeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="309" width="320" height="57"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lkn-T5-koC" id="uDJ-zB-QxP">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="56.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rml-Xy-MrS">
+                                            <rect key="frame" x="8" y="8" width="79" height="21"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UdH-I1-uNI">
+                                            <rect key="frame" x="8" y="27" width="75" height="21"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                     <animations/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="UdH-I1-uNI" secondAttribute="bottom" constant="0.5" id="5ht-Wa-fMy"/>
+                                        <constraint firstItem="UdH-I1-uNI" firstAttribute="leading" secondItem="uDJ-zB-QxP" secondAttribute="leadingMargin" id="902-pH-RKd"/>
+                                        <constraint firstItem="rml-Xy-MrS" firstAttribute="top" secondItem="uDJ-zB-QxP" secondAttribute="topMargin" id="Mey-fK-bwB"/>
+                                        <constraint firstItem="rml-Xy-MrS" firstAttribute="leading" secondItem="uDJ-zB-QxP" secondAttribute="leadingMargin" id="kC8-oM-MeS"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <animations/>
+                                <connections>
+                                    <outlet property="commentLabel" destination="UdH-I1-uNI" id="16P-LQ-Uht"/>
+                                    <outlet property="usernameLabel" destination="rml-Xy-MrS" id="adf-BV-uZX"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -331,12 +366,21 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="m3t-Bo-dhl">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="w6E-65-esr"/>
+                        <barButtonItem key="rightBarButtonItem" title="Like" id="w6E-65-esr">
+                            <connections>
+                                <action selector="likeTapped:" destination="Pts-g2-YMc" id="3VD-xA-6KY"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="commentsLabel" destination="Den-yT-ymJ" id="Hnx-YK-odM"/>
+                        <outlet property="headerImageView" destination="LO9-PD-6wd" id="AMh-AG-IXJ"/>
+                        <outlet property="likesLabel" destination="pBT-1Z-0Fc" id="JdP-wq-wpG"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qls-iI-sR8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-21" y="-739"/>
+            <point key="canvasLocation" x="36" y="-739"/>
         </scene>
         <!--Login Signup Picker View Controller-->
         <scene sceneID="Et8-AO-qig">
@@ -413,29 +457,78 @@
         <scene sceneID="NJy-bn-94E">
             <objects>
                 <tableViewController id="sYR-Vw-e3h" customClass="AddPhotoTableViewController" customModule="Timeline" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Enx-Mf-WL6">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Enx-Mf-WL6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="DgX-he-28c">
-                                <rect key="frame" x="0.0" y="92" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DgX-he-28c" id="vvw-KL-KeR">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <animations/>
-                                </tableViewCellContentView>
-                                <animations/>
-                            </tableViewCell>
-                        </prototypes>
+                        <button key="tableHeaderView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RK3-Pw-D1A">
+                            <rect key="frame" x="0.0" y="64" width="320" height="182"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <state key="normal" title="Add Photo"/>
+                            <connections>
+                                <action selector="addPhotoButtonTapped:" destination="sYR-Vw-e3h" eventType="touchUpInside" id="IUF-Qw-70k"/>
+                            </connections>
+                        </button>
+                        <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="u5C-Yt-sMa">
+                            <rect key="frame" x="0.0" y="290" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <state key="normal" title="Submit"/>
+                            <connections>
+                                <action selector="submitButtonTapped:" destination="sYR-Vw-e3h" eventType="touchUpInside" id="neE-x7-iOA"/>
+                            </connections>
+                        </button>
+                        <sections>
+                            <tableViewSection id="scs-qc-HCe">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="5gK-Xg-4W5">
+                                        <rect key="frame" x="0.0" y="246" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5gK-Xg-4W5" id="9YU-J4-caM">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add photo description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9Jc-N8-w49">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="sYR-Vw-e3h" id="dhq-LY-Hoz"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="9Jc-N8-w49" secondAttribute="trailing" id="Pr9-qd-5bB"/>
+                                                <constraint firstItem="9Jc-N8-w49" firstAttribute="top" secondItem="9YU-J4-caM" secondAttribute="top" id="eic-8z-Qgy"/>
+                                                <constraint firstAttribute="bottom" secondItem="9Jc-N8-w49" secondAttribute="bottom" id="jJ8-Qt-8wc"/>
+                                                <constraint firstItem="9Jc-N8-w49" firstAttribute="leading" secondItem="9YU-J4-caM" secondAttribute="leading" id="wfd-d7-6Sd"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
                         <connections>
                             <outlet property="dataSource" destination="sYR-Vw-e3h" id="466-id-kmf"/>
                             <outlet property="delegate" destination="sYR-Vw-e3h" id="yAG-VG-8Qe"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="75n-aP-gew"/>
+                    <navigationItem key="navigationItem" id="75n-aP-gew">
+                        <barButtonItem key="leftBarButtonItem" title="Item" systemItem="cancel" id="9Ph-z8-Yep">
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="sYR-Vw-e3h" id="D9u-eM-4bc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="addPhotoButton" destination="RK3-Pw-D1A" id="SBR-Ox-Sg1"/>
+                        <outlet property="photoTextField" destination="9Jc-N8-w49" id="wbe-bD-QZ8"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e6a-My-EdS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -636,41 +729,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="FVy-Yq-QlW">
-                                <rect key="frame" x="16" y="108" width="288" height="180"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="FVy-Yq-QlW">
+                                <rect key="frame" x="16" y="108" width="288" height="191"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NHh-2b-0Lb">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NHh-2b-0Lb">
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="32"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1Jo-l1-Qhm">
-                                        <rect key="frame" x="0.0" y="30" width="288" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1Jo-l1-Qhm">
+                                        <rect key="frame" x="0.0" y="32" width="288" height="32"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nMx-fV-X4d">
-                                        <rect key="frame" x="0.0" y="60" width="288" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nMx-fV-X4d">
+                                        <rect key="frame" x="0.0" y="64" width="288" height="32"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Bio" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bS1-B2-7ay">
-                                        <rect key="frame" x="0.0" y="90" width="288" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Bio" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bS1-B2-7ay">
+                                        <rect key="frame" x="0.0" y="96" width="288" height="32"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Website URL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cbK-vC-ewW">
-                                        <rect key="frame" x="0.0" y="120" width="288" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Website URL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cbK-vC-ewW">
+                                        <rect key="frame" x="0.0" y="128" width="288" height="32"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rSV-ds-o6J">
-                                        <rect key="frame" x="0.0" y="150" width="288" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rSV-ds-o6J">
+                                        <rect key="frame" x="0.0" y="159" width="288" height="32"/>
                                         <animations/>
                                         <state key="normal" title="Action"/>
                                         <connections>
