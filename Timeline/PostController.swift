@@ -17,28 +17,63 @@ class PostController {
     
     static func addPost(image: UIImage, caption: String?, completion: (success: Bool, post: Post?) -> Void) {
 
+        ImageController.uploadImage(image) { (identifier) -> Void in
+            if let identifier = identifier {
+                var post = Post(imageEndPoint: identifier, caption: caption, username: UserController.sharedController.currentUser.username)
+                post.save()
+                completion(success: true, post: post)
+            } else {
+                completion(success: false, post: nil)
+            }
+        }
         completion(success: true, post: mockPosts().first)
     }
     
     static func postFromIdentifier(identifier: String, completion: (post: Post?) -> Void) {
-        
-        completion(post: mockPosts().first)
+        FirebaseController.dataAtEndpoint("/posts/\(identifier)") { (data) -> Void in
+            if let data = data as? [String:AnyObject] {
+                let post = Post(json: data, identifier: identifier)
+                completion(post: post)
+            } else {
+                completion(post: nil)
+            }
+        }
     }
     
     static func postsForUser(user: User, completion: (posts: [Post]?) -> Void) {
-        
-        completion(posts: mockPosts())
+        FirebaseController.base.childByAppendingPath("posts").queryOrderedByChild("username").queryEqualToValue(user.username).observeSingleEventOfType(.Value, withBlock: { (snapshot) -> Void in
+            if let postDictionaries = snapshot.value as? [String:AnyObject] {
+                let posts = postDictionaries.flatMap({Post(json: $0.1 as! [String:AnyObject], identifier: $0.0) })
+                let orderedPosts = orderPosts(posts)
+                completion(posts: orderedPosts)
+            } else {
+                completion(posts: nil)
+            }
+        })
     }
     
     static func deletePost(post: Post) {
-        
+        post.delete()
     }
+  
+//    Implement the addCommentWithTextToPost to check for a postIdentifier (if none, save the post, thereby getting a postIdentifier), initialize a Comment, save the comment, fetch the updated post using the identifier, and calling the completion closure with the newly fetched Post.
     
-    static func addCommentWithTextToPost(text: String, var post: Post, completion: (success: Bool, post: Post?) -> Void) {
-        let comment = Comment(username: UserController.sharedController.currentUser.username, text: text, postIdentifier: post.identifier!)
-        
-        post.comments.append(comment)
-        completion(success: true, post: post)
+    static func addCommentWithTextToPost(text: String, post: Post, completion: (success: Bool, post: Post?) -> Void) {
+        if let identifier = post.identifier {
+            var comment = Comment(username: UserController.sharedController.currentUser.username, text: text, postIdentifier: identifier)
+            comment.save()
+            PostController.postFromIdentifier(comment.postIdentifier, completion: { (post) -> Void in
+                completion(success: true, post: post)
+            })
+        } else {
+            var post = post
+            post.save()
+            var comment = Comment(username: UserController.sharedController.currentUser.username, text: text, postIdentifier: post.identifier!)
+            comment.save()
+            PostController.postFromIdentifier(comment.postIdentifier, completion: { (post) -> Void in
+                completion(success: true, post: post)
+            })
+        }
     }
  
     static func deleteComment(comment: Comment, completion: (success: Bool, post: Post?) -> Void) {
