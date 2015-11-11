@@ -40,15 +40,12 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        if userPosts.count != 0 {
             
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("imageCell", forIndexPath: indexPath) as! ImageCollectionViewCell
         let post = userPosts[indexPath.item]
         cell.updateWithImageIdentifier(post.imageEndPoint)
         return cell
-        } else {
-            return UICollectionViewCell()
-        }
+
     }
     
     // ProfileHeaderCollectionReusableView

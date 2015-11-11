@@ -20,7 +20,7 @@ struct Post: Equatable, FirebaseType {
     var caption: String?
     let username: String
     var comments: [Comment]
-    let likes: [Like]
+    var likes: [Like]
     var identifier: String?
     
     var endpoint: String {

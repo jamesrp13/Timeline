@@ -55,12 +55,10 @@ class PostController {
     static func deletePost(post: Post) {
         post.delete()
     }
-  
-//    Implement the addCommentWithTextToPost to check for a postIdentifier (if none, save the post, thereby getting a postIdentifier), initialize a Comment, save the comment, fetch the updated post using the identifier, and calling the completion closure with the newly fetched Post.
     
     static func addCommentWithTextToPost(text: String, post: Post, completion: (success: Bool, post: Post?) -> Void) {
-        if let identifier = post.identifier {
-            var comment = Comment(username: UserController.sharedController.currentUser.username, text: text, postIdentifier: identifier)
+        if let postIdentifier = post.identifier {
+            var comment = Comment(username: UserController.sharedController.currentUser.username, text: text, postIdentifier: postIdentifier)
             comment.save()
             PostController.postFromIdentifier(comment.postIdentifier, completion: { (post) -> Void in
                 completion(success: true, post: post)
@@ -77,22 +75,36 @@ class PostController {
     }
  
     static func deleteComment(comment: Comment, completion: (success: Bool, post: Post?) -> Void) {
-        
-        completion(success: true, post: mockPosts().first)
+        comment.delete()
+        PostController.postFromIdentifier(comment.postIdentifier) { (post) -> Void in
+            completion(success: true, post: post)
+        }
     }
     
     static func addLikeToPost(post: Post, completion: (success: Bool, post: Post?) -> Void) {
-        
-        completion(success: true, post: mockPosts().first)
+        if let postIdentifier = post.identifier {
+            var like = Like(username: UserController.sharedController.currentUser.username, postIdentifier: postIdentifier)
+            like.save()
+        } else {
+            var post = post
+            post.save()
+            var like = Like(username: UserController.sharedController.currentUser.username, postIdentifier: post.identifier!)
+            like.save()
+        }
+        PostController.postFromIdentifier(post.identifier!) { (post) -> Void in
+            completion(success: true, post: post)
+        }
     }
     
     static func deleteLike(like: Like, completion: (success: Bool, post: Post?) -> Void) {
-        
-        completion(success: true, post: mockPosts().first)
+        like.delete()
+        PostController.postFromIdentifier(like.postIdentifier) { (post) -> Void in
+            completion(success: true, post: post)
+        }
     }
     
     static func orderPosts(posts: [Post]) -> [Post] {
-        return []
+        return posts.sort({$0.0.identifier > $0.1.identifier})
     }
     
     static func mockPosts() -> [Post] {
@@ -105,7 +117,9 @@ class PostController {
         let comment1 = Comment(username: "ob1kenob", text: "use the force", postIdentifier: "1234")
         let comment2 = Comment(username: "darth", text: "join the dark side", postIdentifier: "4566")
         
-        let post1 = Post(imageEndPoint: sampleImageIdentifier, caption: "Nice shot!", comments: [comment1, comment2], likes: [like1, like2, like3])
+        var post1 = Post(imageEndPoint: sampleImageIdentifier, caption: "Nice shot!")
+        post1.comments = [comment1, comment2]
+        post1.likes = [like1, like2, like3]
         let post2 = Post(imageEndPoint: sampleImageIdentifier, caption: "Great lookin' kids!")
         let post3 = Post(imageEndPoint: sampleImageIdentifier, caption: "Love the way she looks when she smiles like that.")
         
