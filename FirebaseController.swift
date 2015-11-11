@@ -11,7 +11,7 @@ import Firebase
 
 class FirebaseController {
     
-    static let base = Firebase(url: "https://fierytimeline.firebaseio.com/#-K2hFL-X6CgKAEU2pAo6|9b11fe976490dfc24b36c75ae97e33d0")
+    static let base = Firebase(url: "https://fierytimeline.firebaseio.com/")
     
     static func dataAtEndpoint(endpoint: String, completion: (data:AnyObject?) -> Void)  {
         let baseForEndpoint = FirebaseController.base.childByAppendingPath(endpoint)
