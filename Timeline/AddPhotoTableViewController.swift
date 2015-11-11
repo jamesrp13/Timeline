@@ -71,12 +71,20 @@ class AddPhotoTableViewController: UITableViewController, UIImagePickerControlle
     }
     
     @IBAction func submitButtonTapped(sender: AnyObject) {
-        if let _ = self.image {
-            self.popoverPresentationController
-        } else {
-            let alert = UIAlertController(title: "Please add an image", message: nil, preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-            presentViewController(alert, animated: true, completion: nil)
+        self.view.window?.endEditing(true)
+        if let image = image  {
+            
+            //POST IMAGE
+            
+            PostController.addPost(image, caption: self.caption, completion: { (success, post) -> Void in
+                if post != nil {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                } else {
+                    let failedAlert = UIAlertController(title: "Failed!", message: "Image failed to post. Please try again.", preferredStyle: .Alert)
+                    failedAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                    self.presentViewController(failedAlert, animated: true, completion: nil)
+                }
+            })
         }
     }
     
