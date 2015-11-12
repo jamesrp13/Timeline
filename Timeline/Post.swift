@@ -17,12 +17,11 @@ struct Post: Equatable, FirebaseType {
     private let kLikes = "likes"
     
     let imageEndPoint: String
-    var caption: String?
+    let caption: String?
     let username: String
-    var comments: [Comment]
-    var likes: [Like]
+    let comments: [Comment]
+    let likes: [Like]
     var identifier: String?
-    
     var endpoint: String {
         return "posts"
     }
@@ -36,13 +35,12 @@ struct Post: Equatable, FirebaseType {
         return json
     }
     
-    init(imageEndPoint: String, caption: String? = nil, username: String = UserController.sharedController.currentUser.username) {
+    init(imageEndPoint: String, caption: String?, username: String = "", comments: [Comment] = [], likes: [Like] = [], identifier: String? = nil) {
         self.imageEndPoint = imageEndPoint
         self.caption = caption
         self.username = username
-        self.comments = []
-        self.likes = []
-        self.identifier = nil
+        self.comments = comments
+        self.likes = likes
     }
     
     init?(json: [String : AnyObject], identifier: String) {
@@ -55,8 +53,7 @@ struct Post: Equatable, FirebaseType {
         self.identifier = identifier
         
         if let commentDictionaries = json[kComments] as? [String: AnyObject] {
-            self.comments = commentDictionaries.flatMap({ keyValuePair -> Comment? in
-                return Comment(json: keyValuePair.1 as! [String : AnyObject], identifier: keyValuePair.0)
+            self.comments = commentDictionaries.flatMap({Comment(json: $0.1 as! [String : AnyObject], identifier: $0.0)
             })
         } else {
             self.comments = []

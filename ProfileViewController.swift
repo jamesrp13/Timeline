@@ -18,12 +18,23 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
         print("\(user?.username)")
         // Do any additional setup after loading the view.
         if self.user == nil {
             self.user = UserController.sharedController.currentUser
             editBarButton.enabled = true
+            print("\(UserController.sharedController.currentUser.username)")
+            print("\(self.user.username)")
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        user = nil
     }
     
     func updateBasedOnUser(user: User) {

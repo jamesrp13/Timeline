@@ -58,7 +58,7 @@ extension FirebaseType {
         if let identifier = self.identifier {
             endpointBase = FirebaseController.base.childByAppendingPath(endpoint).childByAppendingPath(identifier)
         } else {
-            endpointBase = FirebaseController.base.childByAutoId()
+            endpointBase = FirebaseController.base.childByAppendingPath(endpoint).childByAutoId()
             self.identifier = endpointBase.key
         }
         endpointBase.updateChildValues(jsonValue)

@@ -53,7 +53,7 @@ class PostController {
     }
     
     static func postFromIdentifier(identifier: String, completion: (post: Post?) -> Void) {
-        FirebaseController.dataAtEndpoint("/posts/\(identifier)") { (data) -> Void in
+        FirebaseController.dataAtEndpoint("posts/\(identifier)") { (data) -> Void in
             if let data = data as? [String:AnyObject] {
                 let post = Post(json: data, identifier: identifier)
                 completion(post: post)
@@ -139,10 +139,7 @@ class PostController {
         
         let comment1 = Comment(username: "ob1kenob", text: "use the force", postIdentifier: "1234")
         let comment2 = Comment(username: "darth", text: "join the dark side", postIdentifier: "4566")
-        
-        var post1 = Post(imageEndPoint: sampleImageIdentifier, caption: "Nice shot!")
-        post1.comments = [comment1, comment2]
-        post1.likes = [like1, like2, like3]
+        let post1 = Post(imageEndPoint: sampleImageIdentifier, caption: "Nice shot!", username: UserController.sharedController.currentUser.username, comments: [comment1, comment2], likes: [like1, like2, like3], identifier: nil)
         let post2 = Post(imageEndPoint: sampleImageIdentifier, caption: "Great lookin' kids!")
         let post3 = Post(imageEndPoint: sampleImageIdentifier, caption: "Love the way she looks when she smiles like that.")
         

@@ -32,18 +32,20 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
     
     func updateWithUser(user: User) {
         if let bio = user.bio {
+            bioLabel.hidden = false
             bioLabel.text = bio
         } else {
             if bioLabel != nil {
-                bioLabel.removeFromSuperview()
+                bioLabel.hidden = true
             }
         }
         
         if let url = user.url {
+            urlButton.hidden = false
             urlButton.setTitle(url, forState: .Normal)
         } else {
             if urlButton != nil {
-                urlButton.removeFromSuperview()
+                urlButton.hidden = true
             }
         }
         

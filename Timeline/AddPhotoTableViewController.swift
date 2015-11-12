@@ -76,7 +76,7 @@ class AddPhotoTableViewController: UITableViewController, UIImagePickerControlle
             
             //POST IMAGE
             
-            PostController.addPost(image, caption: self.caption, completion: { (success, post) -> Void in
+            PostController.addPost(image, caption: photoTextField.text, completion: { (success, post) -> Void in
                 if post != nil {
                     self.dismissViewControllerAnimated(true, completion: nil)
                 } else {
@@ -89,7 +89,7 @@ class AddPhotoTableViewController: UITableViewController, UIImagePickerControlle
     }
     
     @IBAction func cancelButtonTapped(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     // MARK: - Table view data source

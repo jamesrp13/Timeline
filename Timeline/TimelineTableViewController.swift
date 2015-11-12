@@ -14,6 +14,17 @@ class TimelineTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        if let currentUser = UserController.sharedController.currentUser {
+//            if posts.count == 0 {
+//                loadTimeLineForUser(currentUser)
+//            }
+//        } else {
+//            performSegueWithIdentifier("toLoginSignup", sender: nil)
+//        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
         if let currentUser = UserController.sharedController.currentUser {
             if posts.count == 0 {
                 loadTimeLineForUser(currentUser)
@@ -22,10 +33,9 @@ class TimelineTableViewController: UITableViewController {
             performSegueWithIdentifier("toLoginSignup", sender: nil)
         }
     }
-    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-
+        
     }
     
     func loadTimeLineForUser(user: User) {
